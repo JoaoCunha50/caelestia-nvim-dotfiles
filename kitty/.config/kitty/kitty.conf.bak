@@ -1,0 +1,38 @@
+shell /usr/bin/fish
+
+font_family JetBrainsMono Nerd Font Mono
+font_size 15.0
+bold_font auto
+italic_font auto
+
+disable_ligatures never
+
+split_line_width 2
+
+map ctrl+q quit
+
+background_opacity 0.85
+
+# Cursor
+cursor_shape beam
+cursor_beam_thickness 1.6
+cursor_blink_interval 0.6
+
+window_padding_width 6
+window_margin_width 8
+window_border_width 2pt
+
+single_window_margin_width 2
+
+enabled_layouts Tall, *
+
+tab_bar_style powerline
+
+map f1 new_window_with_cwd
+
+hide_window_decorations yes
+
+# BEGIN_KITTY_THEME
+# Base2Tone Drawbridge Dark
+include current-theme.conf
+# END_KITTY_THEME

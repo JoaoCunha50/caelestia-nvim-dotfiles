@@ -29,10 +29,32 @@ return {
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
 
+        local on_attach = function(client, bufnr)
+            local opts = { buffer = bufnr, remap = false }
+            -- Ir para a definição (Go to Definition)
+            vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+            -- Ver informação sobre a função (Hover)
+            vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+            -- Pesquisar workspace symbol
+            vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+            -- Ver diagnósticos (erros) numa janela flutuante
+            vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+            -- Ir para o erro seguinte/anterior
+            vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
+            vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+            -- Code Action (Sugestões de correção rápida)
+            vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+            -- References (Quem usa esta função?)
+            vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+            -- RENAME (Mudar o nome da variável em todo o projeto)
+            vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
+            -- Ajuda na assinatura da função (parâmetros)
+            vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        end
+
 	    require("fidget").setup({
 		    notification = {
 			    window = {
-				    -- Isto diz ao Fidget: "Usa o fundo Normal (transparente) e não o Dark Float"
 				    normal_hl = "Normal",
 				    winblend = 0,
 			    },
@@ -51,11 +73,11 @@ return {
                 "tailwindcss",
             },
             handlers = {
-                -- THE ONLY HANDLER YOU NEED
                 -- This function is called for every server installed above.
                 function(server_name)
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
+                        capabilities = capabilities,
+                        on_attach = on_attach,
                     }
                 end,
             }
