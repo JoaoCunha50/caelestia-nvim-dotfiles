@@ -7,12 +7,12 @@ return {
             -- Instalar parsers (assíncrono)
             require("nvim-treesitter").install({
                 "vimdoc", "javascript", "typescript", "c", "lua",
-                "rust", "jsdoc", "bash", "go", "html", "templ"
+                "rust", "bash", "go", "html", "templ", "tsx", "css",
             })
 
             -- Ativar highlighting automaticamente com limitação de tamanho
             vim.api.nvim_create_autocmd('FileType', {
-                pattern = { 'go', 'lua', 'javascript', 'typescript', 'rust', 'html', 'bash' },
+                pattern = { 'go', 'lua', 'javascript', 'typescript', 'rust', 'html', 'bash', 'tsx', 'css' },
                 callback = function(args)
                     local max_filesize = 100 * 1024 -- 100 KB
                     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
@@ -30,16 +30,6 @@ return {
                 end,
             })
 
-            -- Ativar folds baseados em treesitter
-            vim.api.nvim_create_autocmd('FileType', {
-                pattern = { 'go', 'lua', 'javascript', 'typescript', 'rust' },
-                callback = function()
-                    vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                    vim.wo[0][0].foldmethod = 'expr'
-                    vim.wo[0][0].foldlevel = 99 -- Abre todos os folds por padrão
-                    vim.wo[0][0].foldenable = true -- Mantém folds ativados mas abertos
-                end,
-            })
             -- Registar linguagem Templ
             vim.treesitter.language.register("templ", "templ")
         end,
