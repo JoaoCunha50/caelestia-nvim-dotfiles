@@ -23,7 +23,7 @@ return {
 					comments = { italic = false },
 					keywords = { italic = false },
 					-- Background styles. Can be "dark", "transparent" or "normal"
-					sidebars = "dark", -- style for sidebars, see below
+					sidebars = "normal", -- style for sidebars, see below
 					floats = "dark", -- style for floating windows
 				},
 			})

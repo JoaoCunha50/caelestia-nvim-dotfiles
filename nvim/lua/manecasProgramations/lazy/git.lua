@@ -4,9 +4,8 @@ return {
     {
         "tpope/vim-fugitive",
         config = function()
-            -- <leader>gs abre o menu do Git (tipo status)
             vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-        end
+       end
     },
 
     -- Mete linhas verdes/vermelhas na coluna lateral quando mudas algo
@@ -27,6 +26,10 @@ return {
             vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
             -- Atalho para fazer "blame" na linha (quem escreveu isto?)
             vim.keymap.set("n", "<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", {})
+            vim.keymap.set("n", "<leader>gd", ":Gitsigns diffthis<CR>", { desc = "Git diff this file" })
+            vim.keymap.set("n", "<leader>gD", function()
+                require('gitsigns').diffthis('~')
+            end, { desc = "Git diff against HEAD" })
         end
     },
 

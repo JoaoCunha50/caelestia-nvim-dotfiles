@@ -5,7 +5,7 @@ cd ~/dev/personal/my_dotfiles
 cp -rf ~/.config/kitty/ .
 cp -rf ~/.config/nvim/ .
 cp -rf ~/.config/fish/ .
-cp -f ~/.config/starship.toml .
+cp -f ~/.local/share/caelestia/starship.toml .
 cp -f ~/.local/bin/kitty-sessionizer scripts/
 
 git add .
