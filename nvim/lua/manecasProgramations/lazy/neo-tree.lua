@@ -6,122 +6,49 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
     },
-    config = function()
-        require("neo-tree").setup({
-            close_if_last_window = true, -- Fecha se for a última janela
-            popup_border_style = "rounded",
-            enable_git_status = true,
-            enable_diagnostics = true,
-
-            default_component_configs = {
-                indent = {
-                    indent_size = 2,
-                    padding = 2,
-                    with_markers = true,
-                    indent_marker = "│",
-                    last_indent_marker = "└",
-                    with_expanders = true,
-                    expander_collapsed = "",
-                    expander_expanded = "",
-                    expander_highlight = "NeoTreeExpander",
-                },
-               git_status = {
-                    symbols = {
-                        added     = "✚",
-                        modified  = "",
-                        deleted   = "✖",
-                        renamed   = "󰁕",
-                        untracked = "",
-                        ignored   = "",
-                        unstaged  = "󰄱",
-                        staged    = "",
-                        conflict  = "",
-                    }
-                },
+    cmd = "Neotree",
+    keys = {
+        { "<leader>b", ":Neotree toggle<CR>", desc = "Toggle Neo-tree", silent = true },
+        { "<leader>e", ":Neotree focus<CR>", desc = "Focus Neo-tree", silent = true },
+    },
+    opts = {
+        close_if_last_window = true,
+        popup_border_style = "rounded",
+        enable_git_status = true,
+        enable_diagnostics = true,
+        window = {
+            position = "left",
+            width = 30,
+            mappings = {
+                ["<space>"] = { "toggle_node", nowait = false },
+                ["l"] = "open",
+                ["h"] = "close_node",
             },
-
-            window = {
-                position = "left",
-                width = 30,
-                mapping_options = {
-                    noremap = true,
-                    nowait = true,
-                },
-                mappings = {
-                    ["<space>"] = {
-                        "toggle_node",
-                        nowait = false,
-                    },
-                    ["<2-LeftMouse>"] = "open",
-                    ["l"] = "open",
-                    ["h"] = "close_node",
-                    ["s"] = "open_vsplit",
-                    ["t"] = "open_tabnew",
-                    ["z"] = "close_all_nodes",
-                    ["a"] = {
-                        "add",
-                        config = {
-                            show_path = "none"
-                        }
-                    },
-                    ["A"] = "add_directory",
-                    ["d"] = "delete",
-                    ["r"] = "rename",
-                    ["y"] = "copy_to_clipboard",
-                    ["x"] = "cut_to_clipboard",
-                    ["p"] = "paste_from_clipboard",
-                    ["c"] = "copy",
-                    ["m"] = "move",
-                    ["q"] = "close_window",
-                    ["R"] = "refresh",
-                    ["?"] = "show_help",
-                    ["<"] = "prev_source",
-                    [">"] = "next_source",
-                },
+        },
+        filesystem = {
+            filtered_items = {
+                visible = false,
+                hide_dotfiles = false,
+                hide_gitignored = false,
+                hide_by_name = { "node_modules", ".git" },
             },
-
-            filesystem = {
-                filtered_items = {
-                    visible = false,
-                    hide_dotfiles = false,
-                    hide_gitignored = false,
-                    hide_by_name = {
-                        "node_modules",
-                        ".git",
-                        ".DS_Store",
-                    },
-                },
-                follow_current_file = {
-                    enabled = true,
-                    leave_dirs_open = false,
-                },
-                use_libuv_file_watcher = true,
-                window = {
-                    mappings = {
-                        ["<bs>"] = "navigate_up",
-                        ["."] = "set_root",
-                        ["H"] = "toggle_hidden",
-                        ["/"] = "fuzzy_finder",
-                        ["<c-x>"] = "clear_filter",
-                        ["[g"] = "prev_git_modified",
-                        ["]g"] = "next_git_modified",
-                    },
-                },
+            follow_current_file = { enabled = true },
+            use_libuv_file_watcher = true,
+        },
+        event_handlers = {
+            {
+                event = "file_opened",
+                handler = function()
+                    require("neo-tree.command").execute({ action = "close" })
+                end
             },
-
-            event_handlers = {
-                {
-                    event = "file_opened",
-                    handler = function()
-                        -- Fecha a sidebar quando abres um ficheiro
-                        require("neo-tree.command").execute({ action = "close" })
-                    end
-                },
+        },
+        default_component_configs = {
+            indent = {
+                with_expanders = true,
+                expander_collapsed = "",
+                expander_expanded = "",
             },
-        })
-
-        -- Keybindings
-        vim.keymap.set("n", "<leader>b", ":Neotree toggle<CR>", { silent = true, desc = "Toggle Neo-tree" })
-        vim.keymap.set("n", "<leader>e", ":Neotree focus<CR>", { silent = true, desc = "Focus Neo-tree" })
-    end,
+        },
+    },
 }
