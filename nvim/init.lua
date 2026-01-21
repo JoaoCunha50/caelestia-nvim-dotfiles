@@ -1,2 +1,1 @@
- require("manecasProgramations")
-
+require("manecasProgramations")

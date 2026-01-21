@@ -22,35 +22,11 @@ return {
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
 
-        -- 1. Capabilities: Tell the servers we support advanced autocomplete
         local capabilities = vim.tbl_deep_extend(
             "force",
             {},
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
-
-        local on_attach = function(client, bufnr)
-            local opts = { buffer = bufnr, remap = false }
-            -- Ir para a definição (Go to Definition)
-            vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-            -- Ver informação sobre a função (Hover)
-            vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-            -- Pesquisar workspace symbol
-            vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-            -- Ver diagnósticos (erros) numa janela flutuante
-            vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-            -- Ir para o erro seguinte/anterior
-            vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-            vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
-            -- Code Action (Sugestões de correção rápida)
-            vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-            -- References (Quem usa esta função?)
-            vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-            -- RENAME (Mudar o nome da variável em todo o projeto)
-            vim.keymap.set("n", "<leader>rn", function() vim.lsp.buf.rename() end, opts)
-            -- Ajuda na assinatura da função (parâmetros)
-            vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        end
 
 	    require("fidget").setup({
 		    notification = {
@@ -62,9 +38,7 @@ return {
 	    })
 	    require("mason").setup()
 
-        -- 2. Mason LSP Config: The "Magic" Part
         require("mason-lspconfig").setup({
-            -- List of servers to install automatically
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
@@ -73,12 +47,30 @@ return {
                 "tailwindcss",
             },
             handlers = {
-                -- This function is called for every server installed above.
                 function(server_name)
                     require("lspconfig")[server_name].setup {
-                        capabilities = capabilities,
-                        on_attach = on_attach,
+                        capabilities = capabilities
                     }
+                end,
+                zls = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.zls.setup({
+                        root_dir = lspconfig.util.root_pattern(".git"),
+                        settings = {
+                            zls = {
+                                enable_inlay_hints = true,
+                                enable_snippets = true,
+                                warn_style = true,
+                            },
+                        },
+                    })
+                end,
+                ["tailwindcss"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tailwindcss.setup({
+                        capabilities = capabilities,
+                        filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
+                    })
                 end,
             }
         })
@@ -109,6 +101,8 @@ return {
 
         -- 4. Diagnostics UI (Pretty errors)
         vim.diagnostic.config({
+            virtual_text = true,
+            signs = true,
             float = {
                 focusable = false,
                 style = "minimal",
