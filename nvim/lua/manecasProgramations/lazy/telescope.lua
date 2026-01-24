@@ -8,7 +8,9 @@ return {
         require('telescope').setup({})
 
         local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+        vim.keymap.set('n', '<leader>ff', function()
+            builtin.find_files({ hidden = true })
+        end, {})
         vim.keymap.set('n', '<C-p>', builtin.git_files, {})
         vim.keymap.set('n', '<leader>pws', function()
             local word = vim.fn.expand("<cword>")
@@ -24,4 +26,3 @@ return {
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
     end
 }
-

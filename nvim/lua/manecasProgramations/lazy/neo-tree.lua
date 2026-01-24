@@ -6,10 +6,8 @@ return {
         "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
     },
-    cmd = "Neotree",
     keys = {
         { "<leader>b", ":Neotree toggle<CR>", desc = "Toggle Neo-tree", silent = true },
-        { "<leader>e", ":Neotree focus<CR>", desc = "Focus Neo-tree", silent = true },
     },
     opts = {
         close_if_last_window = true,

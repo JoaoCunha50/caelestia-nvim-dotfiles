@@ -1,7 +1,3 @@
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
-vim.opt.mouse = 'a'
 vim.opt.showmode = false
 
 vim.opt.nu = true

@@ -5,7 +5,7 @@ return {
         "tpope/vim-fugitive",
         config = function()
             vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-       end
+        end
     },
 
     -- Mete linhas verdes/vermelhas na coluna lateral quando mudas algo
@@ -43,15 +43,19 @@ return {
                     icons_enabled = true,
                     section_separators = { left = '', right = '' },
                     component_separators = { left = '', right = '' },
+                    disabled_filetypes = {
+                        statusline = { "neo-tree", "alpha" },
+                        winbar = { "neo-tree", "alpha" }
+                    }
                 },
                 sections = {
                     -- Mostra: Modo | Branch Git | Diff status | Diagnósticos
-                    lualine_a = {'mode'},
-                    lualine_b = {'branch', 'diff', 'diagnostics'},
-                    lualine_c = {'filename'},
-                    lualine_x = {'encoding', 'fileformat', 'filetype'},
-                    lualine_y = {'progress'},
-                    lualine_z = {'location'}
+                    lualine_a = { 'mode' },
+                    lualine_b = { 'branch', 'diff', 'diagnostics' },
+                    lualine_c = { 'filename' },
+                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+                    lualine_y = { 'progress' },
+                    lualine_z = { 'location' }
                 },
             })
         end

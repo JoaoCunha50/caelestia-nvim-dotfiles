@@ -84,7 +84,13 @@ return {
         'saghen/blink.cmp',
         version = 'v0.*',
         opts = {
-            keymap = { preset = 'default' },
+            keymap = {
+                preset = 'default',
+                ['<CR>'] = { 'select_next', 'snippet_forward', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+                ['<Tab>'] = { 'accept', 'fallback' },
+                ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+            },
             appearance = { nerd_font_variant = 'mono' },
             sources = {
                 default = { 'lsp', 'path', 'snippets', 'lazydev' },
