@@ -22,14 +22,6 @@ return {
             desc = "Opencode: Ask"
         },
         {
-            "<leader>oo",
-            function()
-                require("opencode").toggle()
-            end,
-            mode = { "n", "v" },
-            desc = "Opencode: Toggle"
-        },
-        {
             "<leader>os",
             function()
                 require("opencode").select()
@@ -37,7 +29,7 @@ return {
             mode = { "n", "v" },
             desc = "Opencode: Select Action"
         },
-        -- Adicionar range ao opencode (operator)
+        -- Adicionar range ao opencode
         {
             "go",
             function()
@@ -57,13 +49,13 @@ return {
             expr = true,
             desc = "Opencode: Add line"
         },
-        -- Toggle do terminal (também funciona dentro do terminal)
+        -- Toggle do terminal
         {
             "<C-.>",
             function()
                 require("opencode").toggle()
             end,
-            mode = { "n", "t" },
+            mode = { "n", "t", "v" },
             desc = "Opencode: Toggle terminal"
         },
         -- Scroll no opencode
@@ -142,19 +134,12 @@ return {
         vim.api.nvim_create_autocmd("TermOpen", {
             pattern = "*opencode*",
             callback = function()
-                -- Esconder números de linha no terminal
-                vim.opt_local.number = false
-                vim.opt_local.relativenumber = false
-                vim.opt_local.signcolumn = "no"
-
-                -- Mapear Esc para sair do modo terminal
                 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { buffer = true, silent = true })
 
-                -- Mapear Ctrl+w para navegação de janelas no modo terminal
-                vim.keymap.set("t", "<C-w>h", [[<C-\><C-n><C-w>h]], { buffer = true, silent = true })
-                vim.keymap.set("t", "<C-w>j", [[<C-\><C-n><C-w>j]], { buffer = true, silent = true })
-                vim.keymap.set("t", "<C-w>k", [[<C-\><C-n><C-w>k]], { buffer = true, silent = true })
-                vim.keymap.set("t", "<C-w>l", [[<C-\><C-n><C-w>l]], { buffer = true, silent = true })
+                vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { buffer = true, silent = true })
+                vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { buffer = true, silent = true })
+                vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { buffer = true, silent = true })
+                vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { buffer = true, silent = true })
             end,
         })
     end
