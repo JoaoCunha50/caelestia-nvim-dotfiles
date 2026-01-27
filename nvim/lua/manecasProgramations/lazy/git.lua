@@ -37,19 +37,27 @@ return {
                 options = {
                     theme = 'tokyonight', -- Integração perfeita com o teu tema
                     icons_enabled = true,
+                    globalstatus = true,
                     section_separators = { left = '', right = '' },
                     component_separators = { left = '', right = '' },
                     disabled_filetypes = {
-                        statusline = { "neo-tree", "alpha", "opencode-terminal" },
-                        winbar = { "neo-tree", "alpha", "opencode-terminal" }
+                        statusline = { "neo-tree", "alpha" },
+                        winbar = { "neo-tree", "alpha" }
                     }
                 },
                 sections = {
-                    -- Mostra: Modo | Branch Git | Diff status | Diagnósticos
                     lualine_a = { 'mode' },
                     lualine_b = { 'branch', 'diff', 'diagnostics' },
                     lualine_c = { 'filename' },
-                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+                    lualine_x = {
+                        {
+                            require("opencode").statusline,
+                            color = { fg = "#ff9e64" },
+                        },
+                        "encoding",
+                        "fileformat",
+                        "filetype",
+                    },
                     lualine_y = { 'progress' },
                     lualine_z = { 'location' }
                 },

@@ -103,9 +103,12 @@ return {
                     cmd = opencode_path ~= "" and opencode_path or "opencode",
                     args = { "--port" },
                     win = {
-                        position = "right", -- "bottom", "right", "left", "top", "float"
-                        width = 0.35,
-                        height = 1,
+                        position = "float", -- "bottom", "right", "left", "top", "float"
+                        width = 0.85,
+                        height = 0.85,
+                        border = "rounded",
+                        backdrop = 0.6,
+                        zindex = 50,
                         enter = true,
                     },
                 },
@@ -134,12 +137,20 @@ return {
         vim.api.nvim_create_autocmd("TermOpen", {
             pattern = "*opencode*",
             callback = function()
-                vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { buffer = true, silent = true })
-
                 vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { buffer = true, silent = true })
                 vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { buffer = true, silent = true })
                 vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { buffer = true, silent = true })
                 vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { buffer = true, silent = true })
+            end,
+        })
+
+        vim.api.nvim_create_autocmd("FileChangedShellPost", {
+            callback = function(args)
+                Snacks.notify.info("AI Editou: " .. vim.fn.fnamemodify(vim.fn.expand("<afile>"), ":t"),
+                    { title = "Opencode" })
+                if vim.api.nvim_get_current_buf() ~= args.buf then
+                    vim.api.nvim_set_current_buf(args.buf)
+                end
             end,
         })
     end

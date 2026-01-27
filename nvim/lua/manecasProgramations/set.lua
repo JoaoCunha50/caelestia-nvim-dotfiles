@@ -1,5 +1,7 @@
 vim.opt.showmode = false
 
+vim.opt.fillchars = { eob = " " }
+
 vim.opt.nu = true
 vim.opt.relativenumber = false
 

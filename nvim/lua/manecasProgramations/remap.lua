@@ -3,6 +3,10 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
 vim.keymap.set("n", "=ap", "ma=ap'a")
 
+vim.keymap.set("n", "<M-o>", "o<ESC>", { desc = "Add line below" })
+
+vim.keymap.set("n", "<M-O>", "O<ESC>", { desc = "Add line above" })
+
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
