@@ -33,17 +33,13 @@ if status is-interactive
     abbr lla 'ls -la'
 
     # Custom colours
-    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+    #    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
 
     # For jumping between prompts in foot terminal
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
 
-    if type -q kitten
-        kitten @ set-colors --all ~/.config/kitty/tabs-colors.conf
-    end
-
     source ~/.config/fish/functions/scripts.fish
+    fish_add_path $HOME/.opencode/bin
 end
-fish_add_path $HOME/.opencode/bin

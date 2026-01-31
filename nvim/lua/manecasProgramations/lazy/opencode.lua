@@ -104,10 +104,10 @@ return {
                     args = { "--port" },
                     win = {
                         position = "float", -- "bottom", "right", "left", "top", "float"
-                        width = 0.85,
-                        height = 0.85,
+                        width = 0.88,
+                        height = 0.88,
                         border = "rounded",
-                        backdrop = 0.6,
+                        -- backdrop = 0.6,
                         zindex = 50,
                         enter = true,
                     },
@@ -145,12 +145,9 @@ return {
         })
 
         vim.api.nvim_create_autocmd("FileChangedShellPost", {
-            callback = function(args)
+            callback = function()
                 Snacks.notify.info("AI Editou: " .. vim.fn.fnamemodify(vim.fn.expand("<afile>"), ":t"),
                     { title = "Opencode" })
-                if vim.api.nvim_get_current_buf() ~= args.buf then
-                    vim.api.nvim_set_current_buf(args.buf)
-                end
             end,
         })
     end

@@ -78,15 +78,16 @@ return {
                     end
                 end,
             })
-            local signs = { Error = "󰅚", Warn = "󰀪", Hint = "󰌶", Info = "" }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-            end
-
             vim.diagnostic.config({
                 virtual_text = true,
-                signs = true,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "󰅚",
+                        [vim.diagnostic.severity.WARN] = "󰀪",
+                        [vim.diagnostic.severity.HINT] = "󰌶",
+                        [vim.diagnostic.severity.INFO] = "",
+                    },
+                },
                 update_in_insert = false,
                 underline = true,
                 severity_sort = true,
@@ -94,7 +95,7 @@ return {
                     focusable = false,
                     style = "minimal",
                     border = "rounded",
-                    source = "always",
+                    source = true,
                     header = "",
                     prefix = "",
                 },
@@ -107,8 +108,6 @@ return {
         opts = {
             keymap = {
                 preset = 'default',
-                ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
-                ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
                 ['<CR>'] = { 'accept', 'fallback' },
                 ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
             },

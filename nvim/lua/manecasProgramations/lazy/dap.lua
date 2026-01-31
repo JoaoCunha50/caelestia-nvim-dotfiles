@@ -9,10 +9,22 @@ return {
         local dap = require("dap")
         local dapui = require("dapui")
 
-        local sign = vim.fn.sign_define
-        sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
-        sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
-        sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
+        local dap_signs = {
+            DapBreakpoint = { text = "●", texthl = "DapBreakpoint" },
+            DapBreakpointCondition = { text = "●", texthl = "DapBreakpointCondition" },
+            DapLogPoint = { text = "◆", texthl = "DapLogPoint" },
+            DapStopped = { text = "", texthl = "DapStopped" },
+            DapBreakpointRejected = { text = "", texthl = "DapBreakpointRejected" },
+        }
+
+        for type, icon in pairs(dap_signs) do
+            vim.fn.sign_define(type, { text = icon.text, texthl = icon.texthl, linehl = "", numhl = "" })
+        end
+
+        vim.api.nvim_set_hl(0, "DapBreakpoint", { fg = "#e06c75" })          -- Red
+        vim.api.nvim_set_hl(0, "DapBreakpointCondition", { fg = "#61afef" }) -- Blue
+        vim.api.nvim_set_hl(0, "DapLogPoint", { fg = "#98c379" })            -- Green
+        vim.api.nvim_set_hl(0, "DapStopped", { fg = "#98c379" })             -- Green
 
         dapui.setup()
 
