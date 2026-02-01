@@ -107,7 +107,6 @@ return {
                         width = 0.88,
                         height = 0.88,
                         border = "rounded",
-                        -- backdrop = 0.6,
                         zindex = 50,
                         enter = true,
                     },
