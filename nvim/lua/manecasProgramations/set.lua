@@ -1,4 +1,5 @@
 vim.opt.showmode = false
+vim.opt.cmdheight = 0
 
 vim.opt.fillchars = { eob = " " }
 
