@@ -38,12 +38,8 @@ return {
                     theme = 'tokyonight', -- Integração perfeita com o teu tema
                     icons_enabled = true,
                     globalstatus = true,
-                    section_separators = { left = '', right = '' },
-                    component_separators = { left = '', right = '' },
-                    disabled_filetypes = {
-                        statusline = { "neo-tree", "alpha" },
-                        winbar = { "neo-tree", "alpha" }
-                    }
+                    section_separators = { left = '', right = '' },
+                    component_separators = { left = '|', right = '|' },
                 },
                 sections = {
                     lualine_a = { 'mode' },
@@ -58,7 +54,6 @@ return {
                         "fileformat",
                         "filetype",
                     },
-                    lualine_y = { 'progress' },
                     lualine_z = { 'location' }
                 },
             })

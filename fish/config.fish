@@ -32,6 +32,9 @@ if status is-interactive
     abbr la 'ls -a'
     abbr lla 'ls -la'
 
+    # In ~/.config/fish/config.fish
+    alias ksave="kitty @ ls | python3 ~/.config/kitty/kitty-save-session/kitty-convert-dump.py > ~/.config/kitty/session.conf"
+
     # Custom colours
     #    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
 
