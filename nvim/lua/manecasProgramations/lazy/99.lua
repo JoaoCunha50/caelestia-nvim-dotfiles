@@ -9,7 +9,7 @@ return {
                 md_path .. "/dev/personal/skills/REFACTOR.md",
                 md_path .. "/dev/personal/skills/GOLANG.md"
             },
-            model = "opencode/glm-4.7-free"
+            model = "opencode/gpt-5.2-codex"
         })
         vim.keymap.set("v", "<leader>9vv", function()
             _99.visual()

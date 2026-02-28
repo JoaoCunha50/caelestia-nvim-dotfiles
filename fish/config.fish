@@ -1,11 +1,12 @@
 if status is-interactive
     # Starship custom prompt
     starship init fish | source
+
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source
     command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
+
     # Better ls
-    nvm use 22 &> /dev/null
     alias ls='eza --icons --group-directories-first -1'
 
     # Abbrs
@@ -32,17 +33,19 @@ if status is-interactive
     abbr la 'ls -a'
     abbr lla 'ls -la'
 
-    # In ~/.config/fish/config.fish
-    alias ksave="kitty @ ls | python3 ~/.config/kitty/kitty-save-session/kitty-convert-dump.py > ~/.config/kitty/session.conf"
-
     # Custom colours
-    #    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+    # cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
 
     # For jumping between prompts in foot terminal
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
 
+    set -gx ANDROID_HOME $HOME/Android/Sdk
     source ~/.config/fish/functions/scripts.fish
+
     fish_add_path $HOME/.opencode/bin
+    fish_add_path $ANDROID_HOME/emulator
+    fish_add_path $ANDROID_HOME/platform-tools
 end
+

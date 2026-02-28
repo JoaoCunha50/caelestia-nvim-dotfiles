@@ -9,3 +9,7 @@ end
 function study
     kitten @ launch --type=tab --cwd ~/studys --tab-title "study"
 end
+
+function uni
+    kitten @ launch --type=tab --cwd ~/studys/university --tab-title "university"
+end
