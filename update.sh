@@ -8,6 +8,8 @@ cp -rf ~/.config/fish/ .
 cp -f ~/.local/share/caelestia/starship.toml .
 cp -f ~/.local/bin/kitty-sessionizer scripts/
 
+rm -rf kitty/kitty-utils
+
 git add .
 
 if ! git diff-index --quiet HEAD; then
