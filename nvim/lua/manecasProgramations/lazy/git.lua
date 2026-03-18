@@ -33,10 +33,12 @@ return {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
-            local bearded = require("bearded")
+            -- Commented lines are for other possibilities
+            -- local bearded = require("bearded")
             require('lualine').setup({
                 options = {
-                    theme = require("bearded.plugins.lualine").theme(bearded.palette()),
+                    -- theme = require("bearded.plugins.lualine").theme(bearded.palette()),
+                    theme = "rose-pine",
                     icons_enabled = true,
                     globalstatus = true,
                     section_separators = { left = '', right = '' },
