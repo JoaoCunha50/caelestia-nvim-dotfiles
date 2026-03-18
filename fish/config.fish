@@ -34,18 +34,16 @@ if status is-interactive
     abbr lla 'ls -la'
 
     # Custom colours
-    # cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
 
     # For jumping between prompts in foot terminal
     function mark_prompt_start --on-event fish_prompt
         echo -en "\e]133;A\e\\"
     end
 
-    set -gx ANDROID_HOME $HOME/Android/Sdk
     source ~/.config/fish/functions/scripts.fish
 
     fish_add_path $HOME/.opencode/bin
-    fish_add_path $ANDROID_HOME/emulator
-    fish_add_path $ANDROID_HOME/platform-tools
+    fish_add_path $HOME/.local/bin
 end
 

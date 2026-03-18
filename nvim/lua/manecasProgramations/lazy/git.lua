@@ -33,9 +33,10 @@ return {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
+            local bearded = require("bearded")
             require('lualine').setup({
                 options = {
-                    theme = 'tokyonight', -- Integração perfeita com o teu tema
+                    theme = require("bearded.plugins.lualine").theme(bearded.palette()),
                     icons_enabled = true,
                     globalstatus = true,
                     section_separators = { left = '', right = '' },

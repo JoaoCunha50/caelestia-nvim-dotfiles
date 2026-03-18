@@ -95,22 +95,34 @@ return {
             end
         end
 
+        local window = {
+            border = "rounded",
+            position = "float",
+            width = 0.88,
+            height = 0.88,
+            zindex = 50,
+            enter = true,
+        }
+
+        local opencode_cmd = opencode_path ~= "" and opencode_path or "opencode"
+
+        local snacks_terminal_opts = {
+            win = window,
+        }
+
         ---@type opencode.Opts
         vim.g.opencode_opts = {
-            provider = {
-                enabled = "snacks",
-                snacks = {
-                    cmd = opencode_path ~= "" and opencode_path or "opencode",
-                    args = { "--port" },
-                    win = {
-                        position = "float", -- "bottom", "right", "left", "top", "float"
-                        width = 0.88,
-                        height = 0.88,
-                        border = "rounded",
-                        zindex = 50,
-                        enter = true,
-                    },
-                },
+            server = {
+                port = nil,
+                start = function()
+                    require("snacks.terminal").open(opencode_cmd .. " --port", snacks_terminal_opts)
+                end,
+                stop = function()
+                    require("snacks.terminal").get(opencode_cmd .. " --port", snacks_terminal_opts):close()
+                end,
+                toggle = function()
+                    require("snacks.terminal").toggle(opencode_cmd .. " --port", snacks_terminal_opts)
+                end,
             },
             events = {
                 reload = true,
