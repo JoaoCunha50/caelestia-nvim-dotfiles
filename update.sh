@@ -5,7 +5,7 @@ cd ~/dev/personal/my_dotfiles
 cp -rf ~/.config/kitty/ .
 cp -rf ~/.config/nvim/ .
 cp -rf ~/.config/fish/* caelestia-fish-base/
-cp -rf ~/.config/caelestia/user-config.fish
+cp -rf ~/.config/caelestia/user-config.fish .
 cp -rf ~/.claude/skills/* skills/
 cp -f ~/.local/bin/kitty-sessionizer scripts/
 

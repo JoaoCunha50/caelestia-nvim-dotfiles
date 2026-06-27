@@ -1,3 +1,10 @@
+fnm env --use-on-cd --shell fish | source
+
+abbr edit 'nvim'
+
+fish_add_path $HOME/.opencode/bin
+fish_add_path $HOME/.local/bin
+
 function dev
     kitten @ launch --type=tab --cwd ~/dev --tab-title "dev"
 end
@@ -13,3 +20,8 @@ end
 function uni
     kitten @ launch --type=tab --cwd ~/studys/university --tab-title "university"
 end
+
+function fish_greeting
+    command -v fastfetch &> /dev/null && fastfetch --config nyarch
+end
+
