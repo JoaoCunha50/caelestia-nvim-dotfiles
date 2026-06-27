@@ -4,9 +4,9 @@ cd ~/dev/personal/my_dotfiles
 
 cp -rf ~/.config/kitty/ .
 cp -rf ~/.config/nvim/ .
-cp -rf ~/.config/fish/ .
+cp -rf ~/.config/fish/* base-fish/
+cp -rf ~/.config/caelestia/user-config.fish
 cp -rf ~/.claude/skills/* skills/
-cp -f ~/.local/share/caelestia/starship.toml .
 cp -f ~/.local/bin/kitty-sessionizer scripts/
 
 rm -rf kitty/kitty-utils
