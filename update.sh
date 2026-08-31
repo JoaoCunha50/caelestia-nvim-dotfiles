@@ -1,11 +1,12 @@
 #!/bin/bash
 
-cd ~/dev/personal/my_dotfiles
+cd ~/dev/personal/caelestia-nvim-dotfiles/
 
 cp -rf ~/.config/kitty/ .
 cp -rf ~/.config/nvim/ .
 cp -rf ~/.config/fish/* caelestia-fish-base/
 cp -rf ~/.config/caelestia/user-config.fish .
+cp -rf ~/.config/zed/* zed/
 cp -f ~/.local/bin/kitty-sessionizer scripts/
 
 rm -rf kitty/kitty-utils
