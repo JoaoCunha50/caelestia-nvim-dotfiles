@@ -1,0 +1,28 @@
+{
+  "toggles": {
+    "communication": {
+      "vesktop": {
+        "enable": true,
+        "match": [{ "class": "vesktop" }],
+        "command": ["vesktop"],
+        "move": true
+      }
+    },
+    "notes": {
+      "obsidian": {
+        "enable": true,
+        "match": [{ "class": "obsidian" }],
+        "command": ["obsidian"],
+        "move": true
+      }
+    },
+    "music": {
+      "spotify": {
+        "enable": true,
+        "match": [{ "class": "Spotify" }],
+        "command": ["spotify"],
+        "move": true
+      }
+    }
+  }
+}
