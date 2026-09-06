@@ -2,6 +2,9 @@ if status is-interactive
     # Starship custom prompt
     command -v starship &> /dev/null && starship init fish | source
 
+    # Fnm
+    fnm env --use-on-cd --shell fish | source
+
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source
     command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
@@ -32,15 +35,24 @@ if status is-interactive
     abbr la 'ls -a'
     abbr lla 'ls -la'
 
-    # Custom colours
-    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+    abbr edit 'nvim'
 
-    # For jumping between prompts in foot terminal
-    function mark_prompt_start --on-event fish_prompt
-        echo -en "\e]133;A\e\\"
+    fish_add_path $HOME/.opencode/bin
+    fish_add_path $HOME/.local/bin
+
+    function dev
+        kitten @ launch --type=tab --cwd ~/dev --tab-title "dev"
     end
 
-    # Custom fish config
-    set -q XDG_CONFIG_HOME && set -l cConf $XDG_CONFIG_HOME/caelestia || set -l cConf $HOME/.config/caelestia
-    source $cConf/user-config.fish 2> /dev/null
+    function configs
+        kitten @ launch --type=tab --cwd ~/.config --tab-title "configs"
+    end
+
+    function study
+        kitten @ launch --type=tab --cwd ~/studys --tab-title "study"
+    end
+
+    function uni
+        kitten @ launch --type=tab --cwd ~/studys/university --tab-title "university"
+    end
 end
