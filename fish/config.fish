@@ -1,58 +1,72 @@
 if status is-interactive
-    # Starship custom prompt
-    command -v starship &> /dev/null && starship init fish | source
+    # Starship with transient prompt
+    function starship_transient_prompt_func
+        starship module character
+    end
 
-    # Fnm
-    fnm env --use-on-cd --shell fish | source
+    if test "$TERM" != "linux"
+        starship init fish | source
+        enable_transience
+    end
 
-    # Direnv + Zoxide
-    command -v direnv &> /dev/null && direnv hook fish | source
-    command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
+    # fnm
+    fnm env --use-on-cd --shell fish | source
 
-    # Better ls
-    command -v eza &> /dev/null && alias ls='eza --icons --group-directories-first -1'
+    # Direnv + Zoxide
+    command -v direnv &> /dev/null && direnv hook fish | source
+    command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
 
-    # Abbrs
-    abbr lg 'lazygit'
-    abbr gd 'git diff'
-    abbr ga 'git add .'
-    abbr gc 'git commit -am'
-    abbr gl 'git log'
-    abbr gs 'git status'
-    abbr gst 'git stash'
-    abbr gsp 'git stash pop'
-    abbr gp 'git push'
-    abbr gpl 'git pull'
-    abbr gsw 'git switch'
-    abbr gsm 'git switch main'
-    abbr gb 'git branch'
-    abbr gbd 'git branch -d'
-    abbr gco 'git checkout'
-    abbr gsh 'git show'
+    # Better ls
+    command -v eza &> /dev/null && alias ls='eza --icons --group-directories-first -1'
 
-    abbr l 'ls'
-    abbr ll 'ls -l'
-    abbr la 'ls -a'
-    abbr lla 'ls -la'
+    # Abbrs
+    abbr lg 'lazygit'
+    abbr gd 'git diff'
+    abbr ga 'git add .'
+    abbr gc 'git commit -am'
+    abbr gl 'git log'
+    abbr gs 'git status'
+    abbr gst 'git stash'
+    abbr gsp 'git stash pop'
+    abbr gp 'git push'
+    abbr gpl 'git pull'
+    abbr gsw 'git switch'
+    abbr gsm 'git switch main'
+    abbr gb 'git branch'
+    abbr gbd 'git branch -d'
+    abbr gco 'git checkout'
+    abbr gsh 'git show'
 
-    abbr edit 'nvim'
+    abbr l 'ls'
+    abbr ll 'ls -l'
+    abbr la 'ls -a'
+    abbr lla 'ls -la'
 
-    fish_add_path $HOME/.opencode/bin
-    fish_add_path $HOME/.local/bin
+    abbr edit 'nvim'
 
-    function dev
-        kitten @ launch --type=tab --cwd ~/dev --tab-title "dev"
-    end
 
-    function configs
-        kitten @ launch --type=tab --cwd ~/.config --tab-title "configs"
-    end
+    # Alias
+    alias clear "printf '\033[2J\033[3J\033[1;1H'"
+    alias celar "printf '\033[2J\033[3J\033[1;1H'"
+    alias claer "printf '\033[2J\033[3J\033[1;1H'"
+    alias pamcan pacman
 
-    function study
-        kitten @ launch --type=tab --cwd ~/studys --tab-title "study"
-    end
+    fish_add_path $HOME/.opencode/bin
+    fish_add_path $HOME/.local/bin
 
-    function uni
-        kitten @ launch --type=tab --cwd ~/studys/university --tab-title "university"
-    end
+    function dev
+        kitten @ launch --type=tab --cwd ~/dev --tab-title "dev"
+    end
+
+    function configs
+        kitten @ launch --type=tab --cwd ~/.config --tab-title "configs"
+    end
+
+    function study
+        kitten @ launch --type=tab --cwd ~/studys --tab-title "study"
+    end
+
+    function uni
+        kitten @ launch --type=tab --cwd ~/studys/university --tab-title "university"
+    end
 end
