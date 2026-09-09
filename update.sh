@@ -39,12 +39,10 @@ if [[ $confirm_env != [sS]* ]]; then
             ;;
     esac
 
-    # Atualiza o ficheiro .dotfiles.env com o novo ambiente correto
     sed -i "s/^ACTIVE_ENVIRONMENT=.*/ACTIVE_ENVIRONMENT=\"$ACTIVE_ENVIRONMENT\"/" .dotfiles.env
     echo "✔ Ambiente atualizado para: [$ACTIVE_ENVIRONMENT]"
 fi
 
-# Verifica se há alterações para enviar
 echo -e "\nA verificar ficheiros alterados..."
 
 if [[ -z $(git status -s) ]]; then
@@ -67,4 +65,4 @@ fi
 git commit -m "$commit_msg"
 git push
 
-echo -e "\n✅ Sucesso! As tuas configurações (\033[1;36m[$ACTIVE_ENVIRONMENT]\033[0m) estão a salvo no GitHub."
+echo -e "\n✅ Sucesso! As tuas configurações (\033[1;36m[$ACTIVE_ENVIRONMENT]\033[0m) foram enviadas para o repositório remotamente!"

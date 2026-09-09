@@ -9,10 +9,8 @@ fi
 
 source "$PWD/.dotfiles.env"
 
-CORE_UTILITIES=("fastfetch" "kitty" "nvim" "scripts" "zed" "starship.toml")
-
-# Não posso considerar o fish como core pois as shells tem configs visuais específicas do mesmo, pelo que a config logica e de prompt são instalados separadamente (lógica do shared)
-ALL_UTILITIES=("${CORE_UTILITIES[@]}" "fish")
+CORE_UTILITIES=("fastfetch" "nvim" "scripts" "zed" "starship.toml")
+ALL_UTILITIES=("${CORE_UTILITIES[@]}" "fish" "kitty")
 
 backup_and_link() {
     local src="$1"
@@ -24,9 +22,72 @@ backup_and_link() {
         echo "Backup criado: ${dest}.bak_${timestamp}"
     fi
 
-    # Cria o symlink
     ln -s "$src" "$dest"
     echo "✔ Linkado: $dest -> $src"
+}
+
+backup_and_copy_dir() {
+    local src="$1"
+    local dest="$2"
+
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        local timestamp=$(date +%s)
+        mv "$dest" "${dest}.bak_${timestamp}"
+        echo "Backup criado: ${dest}.bak_${timestamp}"
+    fi
+
+    cp -r "$src" "$dest"
+    echo "✔ Copiado (independente do repo): $dest <- $src"
+}
+
+install_kitty() {
+    local mode="$1"
+
+    echo -e "\nA instalar Kitty ($mode)..."
+
+    if [ "$mode" == "utilities" ]; then
+        backup_and_link "$REPO_DIR/kitty" "$CONFIG_DIR/kitty"
+
+        local kitty_conf="$REPO_DIR/kitty/kitty.conf"
+        if [ -f "$kitty_conf" ]; then
+            if grep -q "^#.*include custom-theme.conf" "$kitty_conf"; then
+                sed -i 's/^#.*include custom-theme.conf/include custom-theme.conf/' "$kitty_conf"
+            elif ! grep -q "^include custom-theme.conf" "$kitty_conf"; then
+                echo "include custom-theme.conf" >> "$kitty_conf"
+            fi
+        fi
+
+    else
+        if [ -L "$CONFIG_DIR/kitty" ]; then
+            echo "A remover symlink global do kitty para evitar conflitos..."
+            rm "$CONFIG_DIR/kitty"
+        fi
+
+        mkdir -p "$CONFIG_DIR/kitty"
+        local kitty_conf="$CONFIG_DIR/kitty/kitty.conf"
+        local custom_user="$CONFIG_DIR/kitty/custom-user.conf"
+
+        for f in custom-theme.conf custom-user.conf scroll_mark.py search.py; do
+            if [ -f "$REPO_DIR/kitty/$f" ]; then
+                backup_and_link "$REPO_DIR/kitty/$f" "$CONFIG_DIR/kitty/$f"
+            fi
+        done
+
+        if [ ! -f "$kitty_conf" ]; then
+            echo "A criar um kitty.conf base no teu sistema..."
+            touch "$kitty_conf"
+        fi
+
+        if ! grep -q "^include custom-user.conf" "$kitty_conf"; then
+            echo "" >> "$kitty_conf"
+            echo "include custom-user.conf" >> "$kitty_conf"
+        fi
+
+        if ! grep -q "^include custom-theme.conf" "$custom_user"; then
+            echo "" >> "$custom_user"
+            echo "include custom-theme.conf" >> "$custom_user"
+        fi
+    fi
 }
 
 install_core_utilities() {
@@ -36,9 +97,10 @@ install_core_utilities() {
     done
 }
 
-# FUNÇÕES DAS SHELLS
 install_caelestia() {
     install_core_utilities
+    install_kitty "shell"
+
     echo -e "\n A instalar Caelestia Shell..."
     backup_and_link "$REPO_DIR/caelestia-shell" "$CONFIG_DIR/caelestia"
 
@@ -51,6 +113,8 @@ install_caelestia() {
 
 install_end4() {
     install_core_utilities
+    install_kitty "shell"
+
     echo -e "\n A instalar End4-pC..."
     backup_and_link "$REPO_DIR/end4-pC/illogical-impulse" "$CONFIG_DIR/illogical-impulse"
 
@@ -112,6 +176,8 @@ install_interactive_utilities() {
                 mkdir -p "$CONFIG_DIR/fish/conf.d"
                 backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
                 backup_and_link "$REPO_DIR/shared/prompt.fish" "$CONFIG_DIR/fish/conf.d/prompt.fish"
+            elif [ "$item" == "kitty" ]; then
+                install_kitty "utilities"
             else
                 backup_and_link "$REPO_DIR/$item" "$CONFIG_DIR/$item"
             fi
@@ -153,3 +219,4 @@ case $choice in
 esac
 
 echo -e "\n Instalação concluída com sucesso! Podes precisar de reiniciar a shell."
+
