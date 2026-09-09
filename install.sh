@@ -11,7 +11,7 @@ source .dotfiles.env
 
 CORE_UTILITIES=("fastfetch" "kitty" "nvim" "scripts" "zed" "starship.toml")
 
-# Não posso considerar o fish como core pois as shells tem configs visuais específicas do mesmo, pelo que logica e o prompt são instalados separadamente (lógica do shared)
+# Não posso considerar o fish como core pois as shells tem configs visuais específicas do mesmo, pelo que a config logica e de prompt são instalados separadamente (lógica do shared)
 ALL_UTILITIES=("${CORE_UTILITIES[@]}" "fish")
 
 backup_and_link() {
@@ -36,14 +36,11 @@ install_core_utilities() {
     done
 }
 
-# FUNÇÕES DOS AMBIENTES
+# FUNÇÕES DAS SHELLS
 install_caelestia() {
     install_core_utilities
     echo -e "\n A instalar Caelestia Shell..."
     backup_and_link "$REPO_DIR/caelestia-shell" "$CONFIG_DIR/caelestia"
-
-    echo -e "\n A configurar o Fish para o Caelestia..."
-    backup_and_link "$REPO_DIR/caelestia-shell/fish" "$CONFIG_DIR/fish"
 
     mkdir -p "$CONFIG_DIR/fish/conf.d"
     backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
@@ -59,9 +56,6 @@ install_end4() {
 
     mkdir -p "$CONFIG_DIR/hypr"
     backup_and_link "$REPO_DIR/end4-pC/hypr-custom" "$CONFIG_DIR/hypr/custom"
-
-    echo -e "\n A configurar o Fish para o end4-pC..."
-    backup_and_link "$REPO_DIR/end4-pC/fish" "$CONFIG_DIR/fish"
 
     mkdir -p "$CONFIG_DIR/fish/conf.d"
     backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
