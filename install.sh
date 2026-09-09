@@ -45,16 +45,28 @@ install_kitty() {
 
     echo -e "\nA instalar Kitty ($mode)..."
 
-    if [ "$mode" == "utilities" ]; then
-        backup_and_link "$REPO_DIR/kitty" "$CONFIG_DIR/kitty"
+if [ "$mode" == "utilities" ]; then
+        if [ -L "$kitty_dir" ]; then
+            rm "$kitty_dir"
+        elif [ -d "$kitty_dir" ]; then
+            local timestamp=$(date +%s)
+            mv "$kitty_dir" "${kitty_dir}.bak_${timestamp}"
+        fi
+
+        ln -s "$REPO_DIR/kitty" "$kitty_dir"
 
         local kitty_conf="$REPO_DIR/kitty/kitty.conf"
+
         if [ -f "$kitty_conf" ]; then
-            if grep -q "^#.*include custom-theme.conf" "$kitty_conf"; then
-                sed -i 's/^#.*include custom-theme.conf/include custom-theme.conf/' "$kitty_conf"
+            if grep -qE '^[[:space:]]*#[[:space:]]*include[[:space:]]+custom-theme\.conf' "$kitty_conf"; then
+                sed -i -E 's/^[[:space:]]*#[[:space:]]*include[[:space:]]+custom-theme\.conf/include custom-theme.conf/g' "$kitty_conf"
+                echo "✔ Tema descomentado no kitty.conf"
             elif ! grep -q "^include custom-theme.conf" "$kitty_conf"; then
                 echo "include custom-theme.conf" >> "$kitty_conf"
+                echo "✔ Tema adicionado ao kitty.conf"
             fi
+        else
+            echo "kitty.conf não encontrado no repositório. Cria o ficheiro lá para que funcione."
         fi
 
     else
@@ -76,16 +88,14 @@ install_kitty() {
         if [ ! -f "$kitty_conf" ]; then
             echo "A criar um kitty.conf base no teu sistema..."
             touch "$kitty_conf"
+            echo "include custom-user.conf" >> "$kitty_conf"
+            echo "" >> "$kitty_conf"
+            echo "include custom-theme.conf" >> "$kitty_conf"
         fi
 
         if ! grep -q "^include custom-user.conf" "$kitty_conf"; then
             echo "" >> "$kitty_conf"
             echo "include custom-user.conf" >> "$kitty_conf"
-        fi
-
-        if ! grep -q "^include custom-theme.conf" "$custom_user"; then
-            echo "" >> "$custom_user"
-            echo "include custom-theme.conf" >> "$custom_user"
         fi
     fi
 }
