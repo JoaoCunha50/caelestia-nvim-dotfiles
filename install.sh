@@ -7,7 +7,7 @@ if [ ! -f .dotfiles.env ]; then
     echo 'CONFIG_DIR="$HOME/.config"' >> .dotfiles.env
 fi
 
-source .dotfiles.env
+source "$PWD/.dotfiles.env"
 
 CORE_UTILITIES=("fastfetch" "kitty" "nvim" "scripts" "zed" "starship.toml")
 

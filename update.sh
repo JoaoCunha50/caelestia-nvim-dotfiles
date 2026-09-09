@@ -5,7 +5,8 @@ if [ ! -f .dotfiles.env ]; then
     exit 1
 fi
 
-source .dotfiles.env
+source "$PWD/.dotfiles.env"
+
 cd "$REPO_DIR" || exit
 clear
 echo "======================================"
