@@ -114,9 +114,6 @@ install_caelestia() {
     echo -e "\n A instalar Caelestia Shell..."
     backup_and_link "$REPO_DIR/caelestia-shell" "$CONFIG_DIR/caelestia"
 
-    mkdir -p "$CONFIG_DIR/fish/conf.d"
-    backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
-
     sed -i 's/^ACTIVE_ENVIRONMENT=.*/ACTIVE_ENVIRONMENT="caelestia"/' .dotfiles.env
     echo "✨ Caelestia Shell ativado!"
 }

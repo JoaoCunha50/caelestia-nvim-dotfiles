@@ -2,6 +2,11 @@ fnm env --use-on-cd --shell fish | source
 
 abbr edit 'nvim'
 
+alias clear "printf '\033[2J\033[3J\033[1;1H'"
+alias celar "printf '\033[2J\033[3J\033[1;1H'"
+alias claer "printf '\033[2J\033[3J\033[1;1H'"
+alias pamcan pacman
+
 fish_add_path $HOME/.opencode/bin
 fish_add_path $HOME/.local/bin
 
