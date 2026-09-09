@@ -114,6 +114,9 @@ install_caelestia() {
     echo -e "\n A instalar Caelestia Shell..."
     backup_and_link "$REPO_DIR/caelestia-shell" "$CONFIG_DIR/caelestia"
 
+    mkdir -p "$CONFIG_DIR/fish/functions"
+    backup_and_link "$REPO_DIR/shared/fish_greeting.fish" "$CONFIG_DIR/fish/functions/fish_greeting.fish"
+
     sed -i 's/^ACTIVE_ENVIRONMENT=.*/ACTIVE_ENVIRONMENT="caelestia"/' .dotfiles.env
     echo "✨ Caelestia Shell ativado!"
 }
@@ -130,6 +133,9 @@ install_end4() {
 
     mkdir -p "$CONFIG_DIR/fish/conf.d"
     backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
+
+    mkdir -p "$CONFIG_DIR/fish/functions"
+    backup_and_link "$REPO_DIR/shared/fish_greeting.fish" "$CONFIG_DIR/fish/functions/fish_greeting.fish"
 
     sed -i 's/^ACTIVE_ENVIRONMENT=.*/ACTIVE_ENVIRONMENT="end4"/' .dotfiles.env
     echo "✨ end4-pC ativado!"
@@ -180,9 +186,8 @@ install_interactive_utilities() {
                 echo -e "\n A configurar o Fish base..."
                 backup_and_link "$REPO_DIR/fish" "$CONFIG_DIR/fish"
 
-                mkdir -p "$CONFIG_DIR/fish/conf.d"
-                backup_and_link "$REPO_DIR/shared/logic.fish" "$CONFIG_DIR/fish/conf.d/logic.fish"
-                backup_and_link "$REPO_DIR/shared/prompt.fish" "$CONFIG_DIR/fish/conf.d/prompt.fish"
+                mkdir -p "$CONFIG_DIR/fish/functions"
+                backup_and_link "$REPO_DIR/shared/fish_greeting.fish" "$CONFIG_DIR/fish/functions/fish_greeting.fish"
             elif [ "$item" == "kitty" ]; then
                 install_kitty "utilities"
             else
