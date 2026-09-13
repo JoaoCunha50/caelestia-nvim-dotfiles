@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# Escolhe o diretório com fzf
 SELECTED=$(find ~/dev ~/.config ~/studys -mindepth 1 -maxdepth 2 -type d | fzf)
 
 if [[ -z $SELECTED ]]; then
@@ -9,8 +8,4 @@ fi
 
 TAB_NAME=$(basename "$SELECTED")
 
-# 4. Manda o Kitty criar uma nova Tab nessa pasta
-# --type=tab : Abre numa nova aba (podes mudar para os-window se preferires janela)
-# --cwd : Define o diretório
-# --tab-title : Dá o nome bonito à aba
 kitten @ launch --type=tab --cwd "$SELECTED" --tab-title "$TAB_NAME"
